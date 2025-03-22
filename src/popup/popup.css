@@ -6,7 +6,7 @@ body {
 /* Advanced Management Button */
 .advanced-btn {
     color: #4ea8de;
-    font-size: 16px;
+    font-size: 14px;
     margin-left: 8px;
 }
 
@@ -19,7 +19,7 @@ body {
 /* Logout Button */
 .logout-btn {
     color: #ff4f4f;
-    font-size: 16px;
+    font-size: 14px;
     margin-right: 8px;
 }
 

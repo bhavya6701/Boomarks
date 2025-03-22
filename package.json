@@ -3,5 +3,9 @@
     "@supabase/supabase-js": "^2.49.1",
     "@tailwindcss/cli": "^4.0.12",
     "tailwindcss": "^4.0.15"
+  },
+  "scripts": {
+    "dev": "npx tailwindcss -i ./src/input.css -o ./src/style.css --watch",
+    "build": "npx tailwindcss -i ./src/input.css -o ./src/style.css --minify"
   }
 }
