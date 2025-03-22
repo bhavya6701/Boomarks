@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmarks - Authentication</title>
+
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./auth.css">
+</head>
+
+<body class="p-4 w-[400px]">
+    <div class="space-y-4">
+        <!-- Title of the page -->
+        <h1 class="text-xl font-bold text-center text-white">‖ Boomarks ‖</h1>
+
+        <!-- Authentication form container -->
+        <div id="auth-container" class="space-y-3">
+            <!-- Email input -->
+            <input type="email" id="email" placeholder="Email" class="w-full px-3 py-2 border rounded-lg input-field">
+            <!-- Password input -->
+            <input type="password" id="password" placeholder="Password" class="w-full px-3 py-2 border rounded-lg input-field">
+
+            <!-- Buttons for Sign In and Sign Up -->
+            <div class="flex gap-4">
+                <button id="signin-btn" class="flex-1 px-4 py-2 btn btn-sign-in">
+                    Sign In
+                </button>
+                <button id="signup-btn" class="flex-1 px-4 py-2 btn btn-sign-up">
+                    Sign Up
+                </button>
+            </div>
+        </div>
+
+        <!-- Status message container (hidden by default) -->
+        <div id="status-message" class="text-center text-sm text-red-600 hidden"></div>
+    </div>
+
+    <!-- External JavaScript Modules -->
+    <script type="module" src="../supabase-client.js"></script>
+    <script type="module" src="./auth.js"></script>
+</body>
+
+</html>

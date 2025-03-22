@@ -1,0 +1,92 @@
+/* General Button Styles */
+body {
+    background-color: #252525;
+}
+
+.btn {
+    display: inline-block;
+    margin: 8px 2px;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    text-align: center;
+    border: 2px solid transparent;
+}
+
+/* Sign In Button */
+.btn-sign-in {
+    background-color: transparent;
+    color: #f2f2f2;
+    border-color: #f2f2f2;
+}
+
+.btn-sign-in:hover {
+    background-color: #444;
+    color: #fff;
+    border-color: #f2f2f2;
+}
+
+/* Sign Up Button */
+.btn-sign-up {
+    background-color: transparent;
+    color: #f2f2f2;
+    border-color: #f2f2f2;
+}
+
+.btn-sign-up:hover {
+    background-color: #444;
+    color: #fff;
+    border-color: #f2f2f2;
+}
+
+/* Focus States */
+.btn:focus {
+    outline: none;
+}
+
+/* Disabled State */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #666;
+    color: #bbb;
+    border-color: #666;
+}
+
+/* Extra accessibility improvement: */
+.btn:hover {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Input Style with White Placeholder */
+.input-field {
+    background-color: #333;
+    color: #f2f2f2;
+    border: 2px solid #444;
+    font-size: 16px;
+    width: 100%;
+    margin: 8px 2px;
+    transition: border-color 0.3s ease;
+}
+
+.input-field::placeholder {
+    color: #fff;
+    opacity: 0.7;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #f2f2f2;
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.6);
+}
+
+.input-field:disabled {
+    background-color: #666;
+    color: #bbb;
+    border-color: #666;
+}

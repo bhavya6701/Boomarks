@@ -6,18 +6,19 @@
     "permissions": [
         "bookmarks",
         "downloads",
-        "storage"
+        "storage",
+        "tabs"
     ],
     "browser_action": {
-        "default_popup": "popup.html",
+        "default_popup": "./src/popup/popup.html",
         "default_icon": "icon.png"
     },
     "web_accessible_resources": [
-        "manage.html",
-        "popup.html",
-        "style.css",
-        "config.js"
+        "./src/manage/manage.html",
+        "./src/popup/popup.html",
+        "./src/auth/auth.html",
+        "./src/style.css",
+        "./src/config.js"
     ],
     "content_security_policy": "script-src 'self' https://esm.sh 'wasm-unsafe-eval'; style-src 'self'; connect-src 'self' https://kvxjsbifeyhnklapuigq.supabase.co; object-src 'self'"
-
 }

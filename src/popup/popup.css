@@ -1,0 +1,79 @@
+/* General Button Styles */
+body {
+    background-color: #252525;
+}
+
+/* Advanced Management Button */
+.advanced-btn {
+    color: #4ea8de;
+    font-size: 16px;
+    margin-left: 8px;
+}
+
+.advanced-btn:hover {
+    color: #68c2ff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Logout Button */
+.logout-btn {
+    color: #ff4f4f;
+    font-size: 16px;
+    margin-right: 8px;
+}
+
+.logout-btn:hover {
+    color: #ff7575;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Focus States */
+.advanced-btn:focus,
+.logout-btn:focus {
+    outline: none;
+    text-decoration: underline;
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+
+/* Input Style with White Placeholder */
+.input-field {
+    background-color: #333;
+    color: #f2f2f2;
+    border: 2px solid #444;
+    font-size: 16px;
+    width: 100%;
+    margin: 8px 2px;
+    transition: border-color 0.3s ease;
+}
+
+.input-field::placeholder {
+    color: #fff;
+    opacity: 0.7;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #f2f2f2;
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.6);
+}
+
+.input-field:disabled {
+    background-color: #666;
+    color: #bbb;
+    border-color: #666;
+}
+
+/* List item styles */
+
+.list-item {
+    background-color: #333;
+    color: #f2f2f2;
+    border-bottom: 1px solid #999;
+}
+
+.list-item:hover {
+    background-color: #444;
+}

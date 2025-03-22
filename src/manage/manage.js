@@ -1,16 +1,31 @@
 import { downloadFile, readFile, processForExport, importBookmarks, deleteFolderRecursively, showStatus } from './utils.js';
+import { supabase } from '../supabase-client.js';
+
+// Check if the user session exists, otherwise show an alert and close the tab
+async function checkSession() {
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+        alert('Please login/signup to access Advanced Management features!');
+        const currentTab = await browser.tabs.getCurrent();
+        browser.tabs.remove(currentTab.id);
+        return;
+    }
+}
 
 // UI rendering and event handlers
 document.addEventListener('DOMContentLoaded', async () => {
+    checkSession();
+
     const treeContainer = document.getElementById('bookmark-tree');
     const exportBtn = document.getElementById('export-btn');
     const importBtn = document.getElementById('import-btn');
 
-    // Load bookmarks
+    // Load bookmarks and render the tree
     const bookmarks = await browser.bookmarks.getTree();
     renderTree(bookmarks);
 
-    // Export functionality
+    // Export functionality: Export bookmarks as JSON
     exportBtn.addEventListener('click', async () => {
         try {
             const bookmarks = await browser.bookmarks.getTree();
@@ -28,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Import functionality
+    // Import functionality: Import bookmarks from a JSON file
     importBtn.addEventListener('click', () => {
         const input = document.createElement('input');
         input.type = 'file';
@@ -54,7 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         input.click();
     });
 
-    // Delete event handler
+    // Delete event handler: Handle delete action for bookmarks and folders
     treeContainer.addEventListener('click', async (e) => {
         if (e.target.classList.contains('delete-btn')) {
             const id = e.target.dataset.id;
@@ -81,52 +96,82 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    function renderTree(nodes, parent = treeContainer, depth = 0) {
+    // Render bookmark tree recursively
+    function renderTree(nodes, parent = treeContainer) {
         nodes.forEach(node => {
             const isFolder = !node.url;
-            const card = document.createElement('div');
-            card.className = isFolder ?
-                'folder-card bg-gray-800 p-3 rounded-lg mb-2 border border-gray-700' :
-                'bookmark-item bg-gray-800 p-2 rounded mb-1';
 
+            // Create card container
+            const card = document.createElement('div');
+            card.classList.add(
+                isFolder ? 'folder-card' : 'bookmark-item',
+                'bg-gray-800', 'p-2', 'rounded', 'mb-1'
+            );
+            if (isFolder) {
+                card.classList.add('p-3', 'rounded-lg', 'mb-2', 'border', 'border-gray-700');
+            }
+
+            // Create content container
             const content = document.createElement('div');
-            content.className = 'flex items-center justify-between gap-3';
+            content.classList.add('flex', 'items-center', 'justify-between', 'gap-3');
 
             if (node.url) {
-                content.innerHTML = `
-                    <a href="${node.url}" target="_blank"
-                        class="text-blue-400 hover:text-blue-300 truncate flex-1">
-                        ${node.title}
-                    </a>
-                    <button 
-                        data-id="${node.id}"
-                        class="delete-btn px-2.5 py-1.5 text-sm text-red-400 hover:bg-gray-700/50 rounded-md"
-                    >
-                        Delete
-                    </button>`;
+                // Bookmark item
+                const link = document.createElement('a');
+                link.href = node.url;
+                link.target = '_blank';
+                link.classList.add('text-blue-400', 'hover:text-blue-300', 'truncate', 'flex-1');
+                link.textContent = node.title;
+
+                const deleteBtn = createDeleteButton(node.id);
+                content.appendChild(link);
+                content.appendChild(deleteBtn);
             } else {
-                content.innerHTML = `
-                    <div class="flex items-center gap-2 text-gray-200 flex-1">
-                        <span class="text-xl">📁</span>
-                        <span class="font-medium">${node.title}</span>
-                    </div>
-                    ${node.id !== 'root________' ? `
-                        <button 
-                            data-id="${node.id}"
-                            class="delete-btn px-2.5 py-1.5 text-sm text-red-400 hover:bg-gray-700/50 rounded-md"
-                        >
-                            Delete
-                        </button>` : ''}`;
+                // Folder item
+                const folderContainer = document.createElement('div');
+                folderContainer.classList.add('flex', 'items-center', 'gap-2', 'text-gray-200', 'flex-1');
+
+                const folderIcon = document.createElement('span');
+                folderIcon.classList.add('text-xl');
+                folderIcon.textContent = '📁';
+
+                const folderTitle = document.createElement('span');
+                folderTitle.classList.add('font-medium');
+                folderTitle.textContent = node.title;
+
+                folderContainer.appendChild(folderIcon);
+                folderContainer.appendChild(folderTitle);
+                content.appendChild(folderContainer);
+
+                if (node.id !== 'root________') {
+                    content.appendChild(createDeleteButton(node.id));
+                }
             }
 
             card.appendChild(content);
+
+            // Recursively render children if present
             if (node.children?.length > 0) {
                 const childrenContainer = document.createElement('div');
-                childrenContainer.className = `ml-4 mt-2 space-y-2 ${!isFolder ? 'border-l-2 border-gray-700 pl-3' : ''}`;
-                renderTree(node.children, childrenContainer, depth + 1);
+                childrenContainer.classList.add('ml-4', 'mt-2', 'space-y-2');
+                if (!isFolder) {
+                    childrenContainer.classList.add('border-l-2', 'border-gray-700', 'pl-3');
+                }
+                renderTree(node.children, childrenContainer);
                 card.appendChild(childrenContainer);
             }
+
             parent.appendChild(card);
         });
     }
+
+    // Helper function to create delete buttons
+    function createDeleteButton(id) {
+        const button = document.createElement('button');
+        button.dataset.id = id;
+        button.classList.add('delete-btn', 'px-2.5', 'py-1.5', 'text-sm', 'text-red-400', 'hover:bg-gray-700/50', 'rounded-md');
+        button.textContent = 'Delete';
+        return button;
+    }
+
 });

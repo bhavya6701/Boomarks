@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advanced Bookmark Management</title>
-    <link href="./style.css" rel="stylesheet">
+
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./manage.css">
 </head>
 
 <body class="bg-gray-900 min-h-screen p-6">
     <div class="max-w-4xl mx-auto">
+        <!-- Header Section -->
         <header class="mb-8 text-center">
             <h1 class="text-2xl font-bold text-blue-400 mb-2">Bookmark Manager</h1>
             <p class="text-gray-400">Organize your digital library</p>
         </header>
 
+        <!-- Action Buttons: Export & Import -->
         <div class="flex flex-col items-center mb-6 gap-4">
             <div class="flex gap-3">
+                <!-- Export button -->
                 <button id="export-btn"
                     class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
                     Export
                 </button>
+                <!-- Import button -->
                 <button id="import-btn"
                     class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">
                     Import
@@ -27,9 +35,12 @@
             </div>
         </div>
 
+        <!-- Bookmark Tree Container -->
         <div id="bookmark-tree" class="space-y-3"></div>
     </div>
 
-    <script type="module" src="js/manage/manage.js"></script>
+    <!-- JavaScript Module -->
+    <script type="module" src="./manage.js"></script>
 </body>
+
 </html>
